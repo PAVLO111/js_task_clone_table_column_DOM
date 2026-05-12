@@ -1,39 +1,21 @@
 'use strict';
-const cells = [...document.querySelectorAll('td')];
 
-const data = [...cells].map(cell => cell.textContent.trim());
-// console.log(data);
+function cloneColumn(indexToClone) {
+  const rows = document.querySelectorAll('table tr');
 
+  rows.forEach((row) => {
+    const targetCell = row.cells[indexToClone];
 
-let res = [];
+    if (targetCell) {
+      const newCell = document.createElement(targetCell.tagName);
 
-function restData(arr) {
-  // let res = [];
+      newCell.textContent = targetCell.textContent;
 
-  for (let i = 1; i < data.length; i += 5) {
-    // console.log(data[i]);
-    res.push(data[i]);
-  }
+      const lastCell = row.lastElementChild;
 
-  return res;
-}
-console.log(restData(data));
-
-
-
-function column(arr) {
-  const rows = document.querySelectorAll('table tbody tr');
-  console.log(rows);
-
-  arr.map((el, index) => {
-    if (rows[index]) {
-      // console.log(rows[index]);
-      const cell = document.createElement('td');
-
-      cell.textContent = el;
-      rows[index].append(cell);
+      row.insertBefore(newCell, lastCell);
     }
   });
 }
 
-console.log(column(res));
+cloneColumn(1);
